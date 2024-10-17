@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book App - Wishlist</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-600 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 id="gutenberg-books" class="text-white font-bold text-2xl">Gutenberg Books</h1>
+            <nav>
+                <a href="index.html" class="text-white mr-4">Home</a>
+                <a href="wishlist.html" class="text-white">Wishlist</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto my-8 px-4" role="main">
+        <h2 id="your-wishlist" class="text-2xl font-bold mb-4">Your Wishlist</h2>
+        <div id="wishlist-books" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </main>
+
+    <script src="wishlist.js"></script>
+</body>
+</html>
