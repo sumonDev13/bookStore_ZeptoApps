@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookstore</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav class="bg-blue-500 p-4">
+      <div class="container mx-auto flex justify-between">
+        <h1 class="text-white font-bold text-2xl">Gutenberg Books</h1>
+        <ul class="flex space-x-4">
+          <li><a href="index.html" class="text-white">Home</a></li>
+          <li>
+            <a href="wishlist.html" class="text-white"
+              >Wishlist (<span id="wishlist-count">0</span>)</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="container mx-auto my-8 px-4">
+      <!-- Search and Genre Filter -->
+      <div
+        class="flex flex-col sm:flex-row justify-between mb-4 space-y-4 sm:space-y-0"
+      >
+        <input
+          id="search"
+          type="text"
+          class="border p-2 w-full sm:w-3/4"
+          placeholder="Search books by title"
+        />
+        <select id="genre-filter" class="border p-2 w-full sm:w-1/4">
+          <option value="">Filter by Genre</option>
+        </select>
+      </div>
+
+      <!-- Loading Message -->
+      <div id="loading" class="text-center hidden">Loading...</div>
+
+      <!-- Book List -->
+      <div
+        id="book-list"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4"
+      ></div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center mt-8" id="pagination"></div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
