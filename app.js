@@ -85,17 +85,32 @@ const createBookCard = (book) => {
     const authorName = book?.authors?.map((author) => author?.name).join(', ');
     const genres = book.subjects.join(', ');
     const bookCard = document.createElement('div');
-    bookCard.classList = 'bg-white shadow-lg rounded-lg overflow-hidden p-4 transform transition-all hover:scale-105';
+    bookCard.classList = 'bg-white shadow-lg rounded-lg overflow-hidden p-4 transform transition-all hover:scale-105 cursor-pointer';
     bookCard.innerHTML = `
-        <img class="w-full h-64 object-cover cursor-pointer" src="${book.formats['image/jpeg'] || 'placeholder.jpg'}" alt="${book.title}">
+        <img class="w-full h-64 object-cover" src="${book.formats['image/jpeg'] || 'placeholder.jpg'}" alt="${book.title}">
         <h3 class="text-lg font-bold mt-2">${book.title}</h3>
         <p class="text-gray-600">${authorName}</p>
         <p class="text-sm text-gray-500">${genres || 'N/A'}</p>
         <p class="text-sm text-gray-500">ID: ${book?.id}</p>
-        <button onclick="toggleWishlist(${book.id})" class="mt-4 p-2 bg-red-100 rounded text-red-600">
+        <button class="wishlist-btn mt-4 p-2 bg-red-100 rounded text-red-600">
             ${wishlist.includes(book.id) ? '❤️ Wishlisted' : '♡ Wishlist'}
         </button>
     `;
+
+    // Add click event to the entire book card
+    bookCard.addEventListener('click', (event) => {
+        if (!event.target.classList.contains('wishlist-btn')) {
+            window.location.href = `book.html?id=${book.id}`;
+        }
+    });
+
+    // Add click event to the wishlist button
+    const wishlistBtn = bookCard.querySelector('.wishlist-btn');
+    wishlistBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        toggleWishlist(book.id);
+    });
+
     return bookCard;
 };
 
