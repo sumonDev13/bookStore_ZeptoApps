@@ -17,18 +17,23 @@ const paginationElement = document.getElementById('pagination');
 const searchInput = document.getElementById('search');
 const genreFilter = document.getElementById('genre-filter');
 
-// Fetch available genres
-const fetchGenres = async () => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/subjects/`);
-        const data = await response.json();
-        populateGenreDropdown(data.results);
-    } catch (error) {
-        console.error('Error fetching genres:', error);
-    }
+// Cache object to store fetched data
+const cache = {};
+
+// Extract unique genres from book data
+const extractGenres = (books) => {
+    const genreSet = new Set();
+    books.forEach(book => {
+        book.subjects.forEach(subject => {
+            genreSet.add(subject);
+        });
+    });
+    return Array.from(genreSet).sort();
 };
 
+// Populate genre dropdown
 const populateGenreDropdown = (genres) => {
+    genreFilter.innerHTML = '<option value="">All Genres</option>';
     genres.forEach((genre) => {
         const option = document.createElement('option');
         option.value = genre;
@@ -37,18 +42,30 @@ const populateGenreDropdown = (genres) => {
     });
 };
 
-// Fetch books from the API
+// Fetch books from the API or cache
 const fetchBooks = async (page = 1) => {
     showLoading(true);
     try {
-        const response = await fetch(`${API_BASE_URL}/?page=${page}`);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch data: ${response.statusText}`);
+        if (cache[page]) {
+            // If data is in cache, use it
+            updateBookData(cache[page], page);
+        } else {
+            // If not in cache, fetch from API
+            const response = await fetch(`${API_BASE_URL}/?page=${page}`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch data: ${response.statusText}`);
+            }
+            const data = await response.json();
+            // Store fetched data in cache
+            cache[page] = data;
+            updateBookData(data, page);
         }
-        const data = await response.json();
-        updateBookData(data, page);
         renderBooks(bookList);
         setupPagination();
+        
+        // Extract and populate genres
+        const genres = extractGenres(bookList);
+        populateGenreDropdown(genres);
     } catch (error) {
         handleFetchError(error);
     } finally {
@@ -79,6 +96,11 @@ const renderBooks = (booksToRender) => {
         const bookCard = createBookCard(book);
         bookListElement.appendChild(bookCard);
     });
+};
+
+// Clear cache (optional, can be called when needed)
+const clearCache = () => {
+    cache = {};
 };
 
 const createBookCard = (book) => {
@@ -173,5 +195,4 @@ genreFilter.addEventListener('change', (e) => {
 
 // Initialize
 fetchBooks();
-fetchGenres();
 updateWishlistCount();
