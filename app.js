@@ -114,7 +114,7 @@ const createBookCard = (book) => {
         <p class="text-gray-600">${authorName}</p>
         <p class="text-sm text-gray-500">${genres || 'N/A'}</p>
         <p class="text-sm text-gray-500">ID: ${book?.id}</p>
-        <button class="wishlist-btn mt-4 p-2 bg-red-100 rounded text-red-600">
+        <button class="wishlist-btn mt-4 p-2 bg-green-500 rounded text-white">
             ${wishlist.includes(book.id) ? '❤️ Wishlisted' : '♡ Wishlist'}
         </button>
     `;
