@@ -107,14 +107,14 @@ const createBookCard = (book) => {
     const authorName = book?.authors?.map((author) => author?.name).join(', ');
     const genres = book.subjects.join(', ');
     const bookCard = document.createElement('div');
-    bookCard.classList = 'bg-white shadow-lg rounded-lg overflow-hidden p-4 transform transition-all hover:scale-105 cursor-pointer';
+    bookCard.classList = 'bg-white shadow-lg rounded-lg overflow-hidden p-4 ';
     bookCard.innerHTML = `
-        <img class="w-full h-64 object-cover" src="${book.formats['image/jpeg'] || 'placeholder.jpg'}" alt="${book.title}">
+        <img class="w-full h-64 object-cover rounded-b-full transform transition-all hover:scale-105 cursor-pointer" src="${book.formats['image/jpeg'] || 'placeholder.jpg'}" alt="${book.title}">
         <h3 class="text-lg font-bold mt-2">${book.title}</h3>
         <p class="text-gray-600">${authorName}</p>
         <p class="text-sm text-gray-500">${genres || 'N/A'}</p>
         <p class="text-sm text-gray-500">ID: ${book?.id}</p>
-        <button class="wishlist-btn mt-4 p-2 bg-green-500 rounded text-white">
+        <button class="wishlist-btn mt-4 p-2 bg-green-500 rounded text-white transform transition-all hover:scale-105 cursor-pointer">
             ${wishlist.includes(book.id) ? '❤️ Wishlisted' : '♡ Wishlist'}
         </button>
     `;
